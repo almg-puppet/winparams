@@ -27,6 +27,6 @@ Facter.add("username") do
         retorno = username_line.split("\\")[1].strip
       end
     end
-    retorno.nil? ? "unknown" : retorno
+    retorno == "" || retorno.nil? ? "unknown" : retorno
   end
 end
