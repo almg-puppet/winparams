@@ -48,7 +48,10 @@
 # TODO! get temp dir from a fact using
 # http://stackoverflow.com/questions/35428502/get-temp-directory-on-windows-using-puppet
 # and fallback to fact[puppet_vardir] when not found
-class winparams($system_root = "C:\\" ) {
+class winparams (
+   String $system_root = "C:\\",
+   Boolean $verbose = false,
+   ){
 
   # In order to support puppet 3.8.x the following legacy facts were used instead of the new ones:
   # os[architecture] => architecture
@@ -64,13 +67,15 @@ class winparams($system_root = "C:\\" ) {
   # https://docs.puppet.com/puppet/3.8/config_important_settings.html#recommended-and-safe
   # https://docs.puppet.com/puppet/3.8/experiments_future.html#enabling-the-future-parser
 
-  info('FACTS:')
-  info("facts[architecture]     = ${facts[architecture]}")
-  info("facts[kernelmajversion] = ${facts[kernelmajversion]}")
-  info("facts[osfamily]         = ${facts[osfamily]}")
-  info("facts[puppet_vardir]    = ${facts[puppet_vardir]}")
-  info("facts[system32]         = ${facts[system32]}")
-  info("facts[username]         = ${facts[username]}")
+  if $verbose {
+    info("[${trusted[certname]}] FACTS:")
+    info("[${trusted[certname]}] facts[architecture]     = ${facts[architecture]}")
+    info("[${trusted[certname]}] facts[kernelmajversion] = ${facts[kernelmajversion]}")
+    info("[${trusted[certname]}] facts[osfamily]         = ${facts[osfamily]}")
+    info("[${trusted[certname]}] facts[puppet_vardir]    = ${facts[puppet_vardir]}")
+    info("[${trusted[certname]}] facts[system32]         = ${facts[system32]}")
+    info("[${trusted[certname]}] facts[username]         = ${facts[username]}")
+  }
 
   if $facts[osfamily] != 'windows' {
     fail('Unsupported platform. This module is Windows only.')
@@ -137,23 +142,25 @@ class winparams($system_root = "C:\\" ) {
   # Temporary directory
   $tempdir = regsubst($facts[puppet_vardir], '[/]', '\\', 'G')
 
-  info('VARIABLES:')
-  info("certutil       = ${certutil}")
-  info("cmd            = ${cmd}")
-  info("desktop        = ${desktop}")
-  info("desktop_all    = ${desktop_all}")
-  info("msiexec        = ${msiexec}")
-  info("platform       = ${platform}")
-  info("platform_arch  = ${platform_arch}")
-  info("powershell     = ${powershell}")
-  info("programdata    = ${programdata}")
-  info("programfiles   = ${programfiles}")
-  info("programfiles32 = ${programfiles32}")
-  info("puppetconf     = ${puppetconf}")
-  info("regsvr32       = ${regsvr32}")
-  info("startmenu      = ${startmenu}")
-  info("startmenu_all  = ${startmenu_all}")
-  info("tempdir        = ${tempdir}")
-  info("userprofile    = ${userprofile}")
+  if $verbose {
+    info("[${trusted[certname]}] VARIABLES:")
+    info("[${trusted[certname]}] certutil       = ${certutil}")
+    info("[${trusted[certname]}] cmd            = ${cmd}")
+    info("[${trusted[certname]}] desktop        = ${desktop}")
+    info("[${trusted[certname]}] desktop_all    = ${desktop_all}")
+    info("[${trusted[certname]}] msiexec        = ${msiexec}")
+    info("[${trusted[certname]}] platform       = ${platform}")
+    info("[${trusted[certname]}] platform_arch  = ${platform_arch}")
+    info("[${trusted[certname]}] powershell     = ${powershell}")
+    info("[${trusted[certname]}] programdata    = ${programdata}")
+    info("[${trusted[certname]}] programfiles   = ${programfiles}")
+    info("[${trusted[certname]}] programfiles32 = ${programfiles32}")
+    info("[${trusted[certname]}] puppetconf     = ${puppetconf}")
+    info("[${trusted[certname]}] regsvr32       = ${regsvr32}")
+    info("[${trusted[certname]}] startmenu      = ${startmenu}")
+    info("[${trusted[certname]}] startmenu_all  = ${startmenu_all}")
+    info("[${trusted[certname]}] tempdir        = ${tempdir}")
+    info("[${trusted[certname]}] userprofile    = ${userprofile}")
+  }
 
 }
