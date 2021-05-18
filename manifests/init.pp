@@ -140,7 +140,13 @@ class winparams (
   $regsvr32 = "${facts[system32]}\\regsvr32.exe"
 
   # Temporary directory
-  $tempdir = regsubst($facts[puppet_vardir], '[/]', '\\', 'G')
+  $puppet_vardir = $facts[puppet_vardir]
+  if $puppet_vardir {
+    $tempdir = regsubst($puppet_vardir, '[/]', '\\', 'G')
+  } else {
+    # Quickfix for [Error while evaluating a Function Call, 'regsubst' parameter 'target' expects a value of type Array or String, got Undef]
+    $tempdir = "${system_root}Windows\\Temp"
+  }
 
   if $verbose {
     info("[${trusted[certname]}] VARIABLES:")
@@ -155,6 +161,7 @@ class winparams (
     info("[${trusted[certname]}] programdata    = ${programdata}")
     info("[${trusted[certname]}] programfiles   = ${programfiles}")
     info("[${trusted[certname]}] programfiles32 = ${programfiles32}")
+    info("[${trusted[certname]}] puppet_vardir  = ${puppet_vardir}")
     info("[${trusted[certname]}] puppetconf     = ${puppetconf}")
     info("[${trusted[certname]}] regsvr32       = ${regsvr32}")
     info("[${trusted[certname]}] startmenu      = ${startmenu}")
