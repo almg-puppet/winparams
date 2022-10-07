@@ -135,6 +135,7 @@ class winparams (
   # Location of commonly-used programs from system32.
   $certutil = "${facts[system32]}\\certutil.exe"
   $cmd = "${facts[system32]}\\cmd.exe"
+  $findstr = "${facts[system32]}\\findstr.exe"
   $msiexec = "${facts[system32]}\\msiexec.exe"
   $powershell = "${facts[system32]}\\WindowsPowershell\\v1.0\\powershell.exe -executionpolicy remotesigned -file"
   $regsvr32 = "${facts[system32]}\\regsvr32.exe"
@@ -154,6 +155,7 @@ class winparams (
     info("[${trusted[certname]}] cmd            = ${cmd}")
     info("[${trusted[certname]}] desktop        = ${desktop}")
     info("[${trusted[certname]}] desktop_all    = ${desktop_all}")
+    info("[${trusted[certname]}] findstr        = ${findstr}")
     info("[${trusted[certname]}] msiexec        = ${msiexec}")
     info("[${trusted[certname]}] platform       = ${platform}")
     info("[${trusted[certname]}] platform_arch  = ${platform_arch}")
