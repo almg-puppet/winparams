@@ -112,6 +112,8 @@ class winparams (
       $puppetconf    = "${system_root}ProgramData\\PuppetLabs\\puppet\\etc\\puppet.conf"
       $startmenu     = "${system_root}Users\\${facts[username]}\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu"
       $startmenu_all = "${system_root}ProgramData\\Microsoft\\Windows\\Start Menu"
+      $startup       = "${system_root}Users\\${facts[username]}\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup"
+      $startup_all   = "${system_root}ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\StartUp"
       $userprofile   = "${system_root}Users\\${facts[username]}\\AppData\\Roaming"
     }
   }
@@ -168,6 +170,8 @@ class winparams (
     info("[${trusted[certname]}] regsvr32       = ${regsvr32}")
     info("[${trusted[certname]}] startmenu      = ${startmenu}")
     info("[${trusted[certname]}] startmenu_all  = ${startmenu_all}")
+    info("[${trusted[certname]}] startup        = ${startup}")
+    info("[${trusted[certname]}] startup_all    = ${startup_all}")
     info("[${trusted[certname]}] tempdir        = ${tempdir}")
     info("[${trusted[certname]}] userprofile    = ${userprofile}")
   }
