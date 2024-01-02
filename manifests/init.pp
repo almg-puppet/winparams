@@ -140,6 +140,7 @@ class winparams (
   $findstr = "${facts[system32]}\\findstr.exe"
   $msiexec = "${facts[system32]}\\msiexec.exe"
   $powershell = "${facts[system32]}\\WindowsPowershell\\v1.0\\powershell.exe -executionpolicy remotesigned -file"
+  $powershell_cmd = "${facts[system32]}\\WindowsPowershell\\v1.0\\powershell.exe -command"
   $regsvr32 = "${facts[system32]}\\regsvr32.exe"
 
   # Temporary directory
@@ -162,6 +163,7 @@ class winparams (
     info("[${trusted[certname]}] platform       = ${platform}")
     info("[${trusted[certname]}] platform_arch  = ${platform_arch}")
     info("[${trusted[certname]}] powershell     = ${powershell}")
+    info("[${trusted[certname]}] powershell_cmd = ${powershell_cmd}")
     info("[${trusted[certname]}] programdata    = ${programdata}")
     info("[${trusted[certname]}] programfiles   = ${programfiles}")
     info("[${trusted[certname]}] programfiles32 = ${programfiles32}")
