@@ -142,6 +142,8 @@ class winparams (
   $powershell = "${facts[system32]}\\WindowsPowershell\\v1.0\\powershell.exe -executionpolicy remotesigned -file"
   $powershell_cmd = "${facts[system32]}\\WindowsPowershell\\v1.0\\powershell.exe -command"
   $regsvr32 = "${facts[system32]}\\regsvr32.exe"
+  $robocopy = "${facts[system32]}\\Robocopy.exe"
+  $xcopy = "${facts[system32]}\\xcopy.exe"
 
   # Temporary directory
   $puppet_vardir = $facts[puppet_vardir]
@@ -170,12 +172,14 @@ class winparams (
     info("[${trusted[certname]}] puppet_vardir  = ${puppet_vardir}")
     info("[${trusted[certname]}] puppetconf     = ${puppetconf}")
     info("[${trusted[certname]}] regsvr32       = ${regsvr32}")
+    info("[${trusted[certname]}] robocopy       = ${robocopy}")
     info("[${trusted[certname]}] startmenu      = ${startmenu}")
     info("[${trusted[certname]}] startmenu_all  = ${startmenu_all}")
     info("[${trusted[certname]}] startup        = ${startup}")
     info("[${trusted[certname]}] startup_all    = ${startup_all}")
     info("[${trusted[certname]}] tempdir        = ${tempdir}")
     info("[${trusted[certname]}] userprofile    = ${userprofile}")
+    info("[${trusted[certname]}] xcopy          = ${xcopy}")
   }
 
 }
