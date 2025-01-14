@@ -71,6 +71,7 @@ class winparams (
     info("[${trusted[certname]}] FACTS:")
     info("[${trusted[certname]}] facts[architecture]     = ${facts[architecture]}")
     info("[${trusted[certname]}] facts[kernelmajversion] = ${facts[kernelmajversion]}")
+    info("[${trusted[certname]}] facts[kernelrelease]    = ${facts[kernelrelease]}")
     info("[${trusted[certname]}] facts[osfamily]         = ${facts[osfamily]}")
     info("[${trusted[certname]}] facts[puppet_vardir]    = ${facts[puppet_vardir]}")
     info("[${trusted[certname]}] facts[system32]         = ${facts[system32]}")
@@ -81,15 +82,28 @@ class winparams (
     fail('Unsupported platform. This module is Windows only.')
   }
 
-  $platform = $facts[kernelmajversion] ? {
-    /10[.]./ => 'w10',
-    '6.3'    => 'w81',
-    '6.2'    => 'w8',
-    '6.1'    => 'w7',
-    '6.0'    => 'wvista',
-    '5.1'    => 'wxp',
-    default  => fail('Unsupported Windows version. This module works with Windows XP/Vista/7/8/8.1/10'),
+  if $facts[kernelmajversion] == '10.0' {
+    # https://www.puppet.com/docs/puppet/5.5/function#versioncmp
+    # versioncmp(a, b) returns
+    #   1 if version a is greater than version b
+    #   0 if the versions are equal
+    #   -1 if version a is less than version b
+    if versioncmp($facts[kernelrelease], '10.0.22000') >= 0 {
+      $platform = 'w11'
+    } else {
+      $platform = 'w10'
+    }
+  } else {
+    $platform = $facts[kernelmajversion] ? {
+      '6.3'    => 'w81',
+      '6.2'    => 'w8',
+      '6.1'    => 'w7',
+      '6.0'    => 'wvista',
+      '5.1'    => 'wxp',
+      default  => fail('Unsupported Windows version. This module works with Windows XP/Vista/7/8/8.1/10/11'),
+    }
   }
+
   $platform_arch = "${platform}_${facts[architecture]}"
 
   # Set system paths according to the platform
